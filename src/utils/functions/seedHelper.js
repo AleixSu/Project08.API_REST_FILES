@@ -18,9 +18,8 @@ const seedHelper = (insertedEditors) => {
   const videoGameSeed = []
 
   for (const videogame of videoGames) {
-    videogame.editedBy = videogame.editedBy.map((p) => {
-      return result[p] || p
-    })
+    videogame.editedBy = result[videogame.editedBy] || videogame.editedBy
+
     videoGameSeed.push(videogame)
   }
   return videoGameSeed

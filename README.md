@@ -6,6 +6,9 @@ Permite crear, leer, actualizar y eliminar entidades, con soporte para **subida 
 
 Los editores pueden publicar múltiples críticas u opiniones sobre videojuegos, estableciendo una relación directa entre ambas colecciones.
 
+El proyecto incluye un script de seed que inicializa la base de datos con un conjunto de editores y videojuegos predefinidos.
+Durante la ejecución del seed, las imágenes locales de cada editor y videojuego se suben automáticamente a Cloudinary, garantizando que todas las entidades iniciales cuenten con sus respectivos avatares y portadas desde el primer arranque.
+
 ---
 
 ## Instalación y uso
@@ -13,7 +16,7 @@ Los editores pueden publicar múltiples críticas u opiniones sobre videojuegos,
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/tu-usuario/tu-repositorio.git
+   git clone https://https://github.com/AleixSu/Project08.API_REST_FILES
    ```
 
 2. Accede al directorio del proyecto:
@@ -75,15 +78,15 @@ avatar: [archivo de imagen]
 
 Base: `/api/v1/videogames`
 
-| Método | Endpoint              | Descripción                        | Archivos             |
-| ------ | --------------------- | ---------------------------------- | -------------------- |
-| GET    | `/`                   | Obtiene todos los videojuegos.     | -                    |
-| GET    | `/:id`                | Obtiene un videojuego por ID.      | -                    |
-| GET    | `/editor/:editor`     | Filtra videojuegos por editor.     | -                    |
-| GET    | `/platform/:platform` | Filtra videojuegos por plataforma. | -                    |
-| POST   | `/`                   | Crea un nuevo videojuego.          | `coverImage` (field) |
-| PATCH  | `/:id`                | Actualiza un videojuego existente. | `coverImage` (field) |
-| DELETE | `/:id`                | Elimina un videojuego.             | -                    |
+| Método | Endpoint              | Descripción                                 | Archivos             |
+| ------ | --------------------- | ------------------------------------------- | -------------------- |
+| GET    | `/`                   | Obtiene todos los videojuegos.              | -                    |
+| GET    | `/:id`                | Obtiene un videojuego por ID.               | -                    |
+| GET    | `/editor/:editor`     | Filtra videojuegos por editor usando su ID. | -                    |
+| GET    | `/platform/:platform` | Filtra videojuegos por plataforma.          | -                    |
+| POST   | `/`                   | Crea un nuevo videojuego.                   | `coverImage` (field) |
+| PATCH  | `/:id`                | Actualiza un videojuego existente.          | `coverImage` (field) |
+| DELETE | `/:id`                | Elimina un videojuego.                      | -                    |
 
 #### Ejemplo de body para POST (form-data)
 
@@ -229,7 +232,7 @@ Al actualizar o eliminar registros, las imágenes previas se eliminan automátic
 El proyecto incluye un archivo seed con datos de ejemplo:
 
 - Array de **editores** con nombres, emails y avatares
-- Array de **videojuegos** con títulos, compañías, plataformas, reviews y ratings
+- Array de **videojuegos** con títulos, compañías, plataformas, imágen, reviews y ratings
 
 La función `seedHelper` se encarga de:
 
@@ -243,7 +246,7 @@ Para ejecutar el seed:
 npm run seed
 ```
 
-**Nota:** El seed no sube imágenes a Cloudinary automáticamente. Las imágenes se suben mediante los endpoints de creación y actualización.
+**Nota:** El seed sube imágenes a Cloudinary automáticamente. Es importante que la dirección de la carpeta de origen dentro del folder data sea correcta.
 
 ---
 

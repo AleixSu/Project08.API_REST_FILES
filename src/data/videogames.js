@@ -6,7 +6,7 @@ const videogames = [
     review:
       'Una experiencia de conducción minimalista centrada en el arte del rally. Estilo visual limpio, excelente banda sonora y una curva de dificultad bien equilibrada.',
     rating: 8.5,
-    coverImage: '',
+    coverImage: 'src/data/images/videogamesCoverImages/art_of_rally.jpg',
     editedBy: 'Luca Pro'
   },
   {
@@ -16,7 +16,7 @@ const videogames = [
     review:
       'Horror de supervivencia en primera persona con una inteligencia artificial impredecible. Recreación impecable del universo Alien y tensión constante.',
     rating: 9.2,
-    coverImage: '',
+    coverImage: 'src/data/images/videogamesCoverImages/alien_isolation.jpg',
     editedBy: 'Luca Pro'
   },
   {
@@ -26,7 +26,8 @@ const videogames = [
     review:
       'Aventura narrativa ambientada en la Francia medieval. Excelente historia y ambientación, con mecánicas de sigilo bien integradas.',
     rating: 8.8,
-    coverImage: '',
+    coverImage:
+      'src/data/images/videogamesCoverImages/a_plague_tale_innocence.jpg',
     editedBy: 'Luca Pro'
   },
   {
@@ -36,7 +37,7 @@ const videogames = [
     review:
       'Exploración submarina artística sin combate. Hermosa dirección de arte, música de Austin Wintory y fuerte componente meditativo.',
     rating: 8.7,
-    coverImage: '',
+    coverImage: 'src/data/images/videogamesCoverImages/abzu.jpg',
     editedBy: 'Aleix Suero'
   },
   {
@@ -46,7 +47,7 @@ const videogames = [
     review:
       'Entrega más abierta de la saga Amnesia. Mezcla terror psicológico con gestión de recursos y un ambiente opresivo en tiempo real.',
     rating: 8.3,
-    coverImage: '',
+    coverImage: 'src/data/images/videogamesCoverImages/amnesia_the_bunker.jpg',
     editedBy: 'Aleix Suero'
   },
   {
@@ -56,7 +57,7 @@ const videogames = [
     review:
       'Juego de acción con ritmo jazzístico y estilo visual abstracto. Combina violencia y música generativa con una fluidez hipnótica.',
     rating: 8.9,
-    coverImage: '',
+    coverImage: 'src/data/images/videogamesCoverImages/ape_out.jpg',
     editedBy: 'Aleix Suero'
   }
 ]

@@ -29,11 +29,14 @@ const getVideogamesById = async (req, res, next) => {
 }
 const getVideogamesByEditor = async (req, res, next) => {
   try {
-    const { editor } = req.params
-    const videogameByEditor = await Videogame.find({ editor }).populate(
+    const { editedBy } = req.params
+    console.log(editedBy)
+
+    const videogameByEditor = await Videogame.find({ editedBy }).populate(
       'editedBy'
     )
-    if (videogameByEditor === 0) {
+
+    if (videogameByEditor.length === 0) {
       return res.status(404).json('videogame not found')
     } else {
       return res.status(200).json(videogameByEditor)
@@ -44,11 +47,12 @@ const getVideogamesByEditor = async (req, res, next) => {
 }
 const getVideogamesByPlatform = async (req, res, next) => {
   try {
-    const { platform } = req.params
-    const videogamesByPlatform = await Videogame.find({ platform }).populate(
+    const { platforms } = req.params
+
+    const videogamesByPlatform = await Videogame.find({ platforms }).populate(
       'editedBy'
     )
-    if (videogamesByPlatform === 0) {
+    if (videogamesByPlatform.length === 0) {
       return res.status(404).json("There's no videogames for this platform")
     } else {
       return res.status(200).json(videogamesByPlatform)
@@ -100,13 +104,14 @@ const updateVideogameInfo = async (req, res, next) => {
 const deleteVideogame = async (req, res, next) => {
   try {
     const { id } = req.params
-    const videogame = await Videogame.findByIdAndDelete(id)
-    if (!videogame) {
+    const deletedVideogame = await Videogame.findByIdAndDelete(id)
+    if (!deletedVideogame) {
       return res.status(404).json('Videogamenot found')
     } else {
+      deleteFile(deletedVideogame.coverImage)
       return res
         .status(200)
-        .json(`The videogame${videogame.title} has been deleted`)
+        .json(`The videogame ${deletedVideogame.title} has been deleted`)
     }
   } catch (error) {
     return res.status(400).json(error)

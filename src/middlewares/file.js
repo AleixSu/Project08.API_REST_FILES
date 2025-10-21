@@ -22,3 +22,24 @@ const uploadToVideogames = multer({ storage: storageVideogame })
 
 console.log('Cloudinary middlewares loaded')
 module.exports = { uploadToEditors, uploadToVideogames }
+
+//!INTENTO DE REUTILIZACIÓN
+
+/* const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: (req, file) => { //Al usar esta función tenemos acceso completo a req (la petición http completa) y al file (objeto con los datos del archivo)
+    let folder = 'Project08/General'  // Carpeta general que guardará dos carpetas más
+
+    if (file.fieldname === 'avatar') folder = 'Project08/Editors'  // la carpeta para editores
+    if (file.fieldname === 'coverImage') folder = 'Project08/Videogames' //carpeta para videojuegos
+
+    return {
+      folder,
+      allowed_formats: ['jpg', 'png', 'jpeg', 'gif', 'webp']
+    }
+  }
+}) 
+  const upload= multer({ storage: storage })
+  module.exports = upload
+
+*/

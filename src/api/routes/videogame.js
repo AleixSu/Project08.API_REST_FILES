@@ -1,3 +1,4 @@
+const { uploadToVideogames } = require('../../middlewares/file')
 const {
   getVideogames,
   getVideogamesByEditor,
@@ -11,11 +12,19 @@ const {
 const videogameRouter = require('express').Router()
 
 videogameRouter.get('/', getVideogames)
-videogameRouter.get('/editor/:editor', getVideogamesByEditor)
-videogameRouter.get('/platform/:platform', getVideogamesByPlatform)
+videogameRouter.get('/editor/:editedBy', getVideogamesByEditor)
+videogameRouter.get('/platform/:platforms', getVideogamesByPlatform)
 videogameRouter.get('/:id', getVideogamesById)
-videogameRouter.post('/', postNewVideogame)
-videogameRouter.patch('/:id', updateVideogameInfo)
+videogameRouter.post(
+  '/',
+  uploadToVideogames.single('coverImage'),
+  postNewVideogame
+)
+videogameRouter.patch(
+  '/:id',
+  uploadToVideogames.single('coverImage'),
+  updateVideogameInfo
+)
 videogameRouter.delete('/:id', deleteVideogame)
 
 module.exports = videogameRouter
