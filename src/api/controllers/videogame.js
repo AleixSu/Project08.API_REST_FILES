@@ -84,8 +84,10 @@ const updateVideogameInfo = async (req, res, next) => {
     const updatedData = { ...req.body }
 
     if (req.file) {
-      if (oldVideogame.coverImage) deleteFile(oldVideogame.coverImage)
-      updatedData.coverImage = req.file.path
+      if (oldVideogame.coverImage) {
+        deleteFile(oldVideogame.coverImage)
+        updatedData.coverImage = req.file.path
+      }
     }
 
     const videogameUpdated = await Videogame.findByIdAndUpdate(
