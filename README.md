@@ -76,7 +76,7 @@ avatar: [archivo de imagen]
 
 ### Videogames
 
-Base: `/api/v1/videogames`
+Base: `/api/v1/videogamesreviews`
 
 | Método | Endpoint              | Descripción                                 | Archivos             |
 | ------ | --------------------- | ------------------------------------------- | -------------------- |

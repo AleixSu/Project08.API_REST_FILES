@@ -10,7 +10,8 @@ const getVideogames = async (req, res, next) => {
       return res.status(200).json(videogames)
     }
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 
@@ -24,7 +25,8 @@ const getVideogamesById = async (req, res, next) => {
       return res.status(200).json(videogame)
     }
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 const getVideogamesByEditor = async (req, res, next) => {
@@ -42,7 +44,8 @@ const getVideogamesByEditor = async (req, res, next) => {
       return res.status(200).json(videogameByEditor)
     }
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 const getVideogamesByPlatform = async (req, res, next) => {
@@ -58,7 +61,8 @@ const getVideogamesByPlatform = async (req, res, next) => {
       return res.status(200).json(videogamesByPlatform)
     }
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 
@@ -71,7 +75,8 @@ const postNewVideogame = async (req, res, next) => {
     const videogameSaved = await newVideogame.save()
     return res.status(201).json(videogameSaved)
   } catch (error) {
-    return res.status(400).json('error')
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 
@@ -81,12 +86,26 @@ const updateVideogameInfo = async (req, res, next) => {
     const oldVideogame = await Videogame.findById(id)
     if (!oldVideogame) return res.status(404).json('Videogame not found')
 
-    const updatedData = { ...req.body }
+    const updatedData = {}
+    const arrayFields = ['editedBy', 'platforms']
+    for (const field of arrayFields) {
+      if (req.body[field]) {
+        if (!updatedData.$addToSet) updatedData.$addToSet = {}
+        updatedData.$addToSet[field] = Array.isArray(req.body[field])
+          ? { $each: req.body[field] }
+          : req.body[field]
+      }
+    }
 
     if (req.file) {
       if (oldVideogame.coverImage) {
         deleteFile(oldVideogame.coverImage)
-        updatedData.coverImage = req.file.path
+      }
+      updatedData.coverImage = req.file.path
+    }
+    for (const data in req.body) {
+      if (!arrayFields.includes(data)) {
+        updatedData[data] = req.body[data]
       }
     }
 
@@ -96,10 +115,11 @@ const updateVideogameInfo = async (req, res, next) => {
       {
         new: true
       }
-    )
+    ).populate('editedBy')
     return res.status(200).json(videogameUpdated)
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 
@@ -116,7 +136,8 @@ const deleteVideogame = async (req, res, next) => {
         .json(`The videogame ${deletedVideogame.title} has been deleted`)
     }
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 

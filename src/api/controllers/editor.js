@@ -10,7 +10,8 @@ const getEditors = async (req, res, next) => {
       return res.status(200).json(editors)
     }
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 
@@ -24,7 +25,8 @@ const getEditorById = async (req, res, next) => {
       return res.status(200).json(editor)
     }
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 
@@ -37,7 +39,8 @@ const createNewEditor = async (req, res, next) => {
     const editorSaved = await newEditor.save()
     return res.status(201).json(editorSaved)
   } catch (error) {
-    return res.status(400).json('error')
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 
@@ -57,7 +60,8 @@ const updateEditorInfo = async (req, res, next) => {
     })
     return res.status(200).json(editorUpdated)
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 
@@ -74,7 +78,8 @@ const deleteEditor = async (req, res, next) => {
         .json(`The editor ${deletedEditor.name} has been deleted`)
     }
   } catch (error) {
-    return res.status(400).json(error)
+    console.log(error)
+    return res.status(400).json('Woops, something went wrong')
   }
 }
 
