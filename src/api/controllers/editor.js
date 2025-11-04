@@ -1,4 +1,5 @@
 const deleteFile = require('../../utils/functions/deleteFile')
+const errorHandler = require('../../utils/functions/errorHandler')
 const Editor = require('../models/editor')
 
 const getEditors = async (req, res, next) => {
@@ -11,7 +12,7 @@ const getEditors = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'get the data')
   }
 }
 
@@ -26,7 +27,7 @@ const getEditorById = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'get editor by id')
   }
 }
 
@@ -40,7 +41,7 @@ const createNewEditor = async (req, res, next) => {
     return res.status(201).json(editorSaved)
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'create a new editor')
   }
 }
 
@@ -50,7 +51,7 @@ const updateEditorInfo = async (req, res, next) => {
     const oldEditor = await Editor.findById(id)
     if (!oldEditor) return res.status(404).json('Editor not found')
 
-    if (req.file && oldEditor.avatar) deleteFile(oldEditor.avatar)
+    if (req.file && oldEditor.avatar) await deleteFile(oldEditor.avatar)
 
     const updatedData = { ...req.body }
     if (req.file) updatedData.avatar = req.file.path
@@ -61,7 +62,7 @@ const updateEditorInfo = async (req, res, next) => {
     return res.status(200).json(editorUpdated)
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'update the editor information')
   }
 }
 
@@ -72,14 +73,14 @@ const deleteEditor = async (req, res, next) => {
     if (!deletedEditor) {
       return res.status(404).json('Editor not found')
     } else {
-      deleteFile(deletedEditor.avatar)
+      await deleteFile(deletedEditor.avatar)
       return res
         .status(200)
         .json(`The editor ${deletedEditor.name} has been deleted`)
     }
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'delete the editor')
   }
 }
 

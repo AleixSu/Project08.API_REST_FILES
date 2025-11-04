@@ -1,4 +1,5 @@
 const deleteFile = require('../../utils/functions/deleteFile')
+const errorHandler = require('../../utils/functions/errorHandler')
 const Videogame = require('../models/videogame')
 
 const getVideogames = async (req, res, next) => {
@@ -11,7 +12,7 @@ const getVideogames = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'get the videogames')
   }
 }
 
@@ -26,7 +27,7 @@ const getVideogamesById = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'get the videogame by its ID')
   }
 }
 const getVideogamesByEditor = async (req, res, next) => {
@@ -45,7 +46,7 @@ const getVideogamesByEditor = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, `get the videogames by editor`)
   }
 }
 const getVideogamesByPlatform = async (req, res, next) => {
@@ -62,7 +63,7 @@ const getVideogamesByPlatform = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, `get videogames by platform`)
   }
 }
 
@@ -76,7 +77,7 @@ const postNewVideogame = async (req, res, next) => {
     return res.status(201).json(videogameSaved)
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'post a new videogame')
   }
 }
 
@@ -96,10 +97,14 @@ const updateVideogameInfo = async (req, res, next) => {
           : req.body[field]
       }
     }
+    /* if (req.body.removeEditedBy) { //Lo que hace $pull es eliminar elementos que coincidan con lo que enviemos en req.body
+  if (!updatedData.$pull) updatedData.$pull = {}
+  updatedData.$pull.editedBy = req.body.removeEditedBy
+    }} */
 
     if (req.file) {
       if (oldVideogame.coverImage) {
-        deleteFile(oldVideogame.coverImage)
+        await deleteFile(oldVideogame.coverImage)
       }
       updatedData.coverImage = req.file.path
     }
@@ -119,7 +124,7 @@ const updateVideogameInfo = async (req, res, next) => {
     return res.status(200).json(videogameUpdated)
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'update a videogame')
   }
 }
 
@@ -130,14 +135,14 @@ const deleteVideogame = async (req, res, next) => {
     if (!deletedVideogame) {
       return res.status(404).json('Videogamenot found')
     } else {
-      deleteFile(deletedVideogame.coverImage)
+      await deleteFile(deletedVideogame.coverImage)
       return res
         .status(200)
         .json(`The videogame ${deletedVideogame.title} has been deleted`)
     }
   } catch (error) {
     console.log(error)
-    return res.status(400).json('Woops, something went wrong')
+    return errorHandler(res, error, 500, 'delete a videogame')
   }
 }
 
