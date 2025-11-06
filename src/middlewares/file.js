@@ -27,7 +27,7 @@ module.exports = { uploadToEditors, uploadToVideogames }
 
 /* const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: (req, file) => { //Al usar esta función tenemos acceso completo a req (la petición http completa) y al file (objeto con los datos del archivo)
+  params: (req, file) => {     // Al usar una función en 'params' tenemos acceso completo a la petición HTTP (req) y al objeto 'file', que contiene los metadatos del archivo subido.
     let folder = 'Project08/General'  // Carpeta general que guardará dos carpetas más
 
     if (file.fieldname === 'avatar') folder = 'Project08/Editors'  // la carpeta para editores
